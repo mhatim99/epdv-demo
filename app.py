@@ -812,6 +812,85 @@ SAMPLE_OBSERVATIONS_NL = {
     ],
 }
 
+# Sample species observations - simulating GBIF occurrence data
+# In full plugin: derived from 98M+ GBIF records
+SAMPLE_SPECIES_OBSERVATIONS = {
+    # Heathland species
+    "Calluna vulgaris": [
+        {"lat": 52.15, "lon": 5.85, "year": 2010}, {"lat": 52.20, "lon": 5.90, "year": 2010},
+        {"lat": 52.10, "lon": 5.80, "year": 2010}, {"lat": 52.25, "lon": 5.95, "year": 2010},
+        {"lat": 52.40, "lon": 6.20, "year": 2010}, {"lat": 52.85, "lon": 6.75, "year": 2010},
+        {"lat": 52.05, "lon": 5.75, "year": 2000}, {"lat": 52.30, "lon": 6.00, "year": 2000},
+    ],
+    "Erica cinerea": [
+        {"lat": 52.15, "lon": 5.85, "year": 2010}, {"lat": 52.20, "lon": 5.90, "year": 2010},
+        {"lat": 52.10, "lon": 5.80, "year": 2010}, {"lat": 52.05, "lon": 5.75, "year": 2000},
+    ],
+    "Erica tetralix": [
+        {"lat": 52.40, "lon": 6.20, "year": 2010}, {"lat": 52.35, "lon": 6.15, "year": 2010},
+        {"lat": 52.85, "lon": 6.75, "year": 2010}, {"lat": 52.45, "lon": 6.25, "year": 2000},
+    ],
+    # Saltmarsh species
+    "Limonium vulgare": [
+        {"lat": 53.45, "lon": 5.75, "year": 2010}, {"lat": 53.40, "lon": 5.65, "year": 2010},
+        {"lat": 53.35, "lon": 5.80, "year": 2010}, {"lat": 51.65, "lon": 4.05, "year": 2010},
+        {"lat": 53.30, "lon": 5.55, "year": 2000}, {"lat": 51.58, "lon": 3.95, "year": 2010},
+    ],
+    "Puccinellia maritima": [
+        {"lat": 53.45, "lon": 5.75, "year": 2010}, {"lat": 53.42, "lon": 6.10, "year": 2010},
+        {"lat": 53.38, "lon": 6.25, "year": 2010}, {"lat": 51.65, "lon": 4.05, "year": 2010},
+    ],
+    "Aster tripolium": [
+        {"lat": 53.45, "lon": 5.75, "year": 2010}, {"lat": 53.40, "lon": 5.65, "year": 2010},
+        {"lat": 51.65, "lon": 4.05, "year": 2010}, {"lat": 51.58, "lon": 3.95, "year": 2010},
+    ],
+    # Forest species
+    "Fagus sylvatica": [
+        {"lat": 50.85, "lon": 5.90, "year": 2010}, {"lat": 50.80, "lon": 5.85, "year": 2010},
+        {"lat": 50.82, "lon": 5.95, "year": 2010}, {"lat": 50.78, "lon": 5.80, "year": 2000},
+        {"lat": 52.08, "lon": 5.92, "year": 2010},
+    ],
+    "Quercus robur": [
+        {"lat": 52.08, "lon": 5.92, "year": 2010}, {"lat": 52.12, "lon": 5.88, "year": 2010},
+        {"lat": 50.90, "lon": 5.82, "year": 2000}, {"lat": 52.15, "lon": 5.85, "year": 2010},
+    ],
+    "Galium odoratum": [
+        {"lat": 50.85, "lon": 5.90, "year": 2010}, {"lat": 50.80, "lon": 5.85, "year": 2010},
+        {"lat": 50.82, "lon": 5.95, "year": 2010},
+    ],
+    # Bog species
+    "Sphagnum magellanicum": [
+        {"lat": 52.85, "lon": 6.75, "year": 2010}, {"lat": 52.80, "lon": 6.80, "year": 2010},
+        {"lat": 52.75, "lon": 6.70, "year": 2010}, {"lat": 52.90, "lon": 6.65, "year": 2000},
+    ],
+    "Drosera rotundifolia": [
+        {"lat": 52.85, "lon": 6.75, "year": 2010}, {"lat": 52.80, "lon": 6.80, "year": 2010},
+        {"lat": 52.40, "lon": 6.20, "year": 2010}, {"lat": 52.70, "lon": 6.90, "year": 2000},
+    ],
+    "Eriophorum vaginatum": [
+        {"lat": 52.85, "lon": 6.75, "year": 2010}, {"lat": 52.80, "lon": 6.80, "year": 2010},
+        {"lat": 52.75, "lon": 6.70, "year": 2010},
+    ],
+    # Grassland species
+    "Bromus erectus": [
+        {"lat": 50.88, "lon": 5.75, "year": 2010}, {"lat": 50.85, "lon": 5.80, "year": 2010},
+        {"lat": 50.82, "lon": 5.70, "year": 2000},
+    ],
+    "Molinia caerulea": [
+        {"lat": 52.55, "lon": 5.45, "year": 2010}, {"lat": 52.50, "lon": 5.50, "year": 2010},
+        {"lat": 52.40, "lon": 6.20, "year": 2010}, {"lat": 52.60, "lon": 5.40, "year": 2000},
+    ],
+    # Pine forest species
+    "Pinus sylvestris": [
+        {"lat": 52.18, "lon": 5.78, "year": 2010}, {"lat": 52.22, "lon": 5.82, "year": 2010},
+        {"lat": 52.15, "lon": 5.75, "year": 2000}, {"lat": 52.20, "lon": 5.90, "year": 2010},
+    ],
+    "Vaccinium myrtillus": [
+        {"lat": 52.18, "lon": 5.78, "year": 2010}, {"lat": 52.22, "lon": 5.82, "year": 2010},
+        {"lat": 52.15, "lon": 5.85, "year": 2010}, {"lat": 50.85, "lon": 5.90, "year": 2010},
+    ],
+}
+
 
 # ============================================================================
 # CORE ALGORITHM - HABITAT PREDICTION
@@ -918,7 +997,128 @@ def create_habitat_map(habitat_code: str, year_filter: Optional[int] = None) -> 
     if len(observations) > 3:
         heat_data = [[o["lat"], o["lon"], o["score"]] for o in observations]
         HeatMap(heat_data, radius=25, blur=15).add_to(m)
-    
+
+    return m
+
+
+def create_species_distribution_map(species_name: str) -> folium.Map:
+    """Create a map showing species occurrence locations."""
+
+    m = folium.Map(
+        location=[52.2, 5.5],
+        zoom_start=7,
+        tiles="cartodbpositron"
+    )
+
+    observations = SAMPLE_SPECIES_OBSERVATIONS.get(species_name, [])
+
+    if not observations:
+        # Add a message marker
+        folium.Marker(
+            location=[52.2, 5.5],
+            popup="No observation data available for this species in the demo",
+            icon=folium.Icon(color="gray", icon="info-sign")
+        ).add_to(m)
+        return m
+
+    # Add markers for each observation
+    for obs in observations:
+        color = "#2ca02c" if obs["year"] == 2010 else "#ff7f0e"
+        folium.CircleMarker(
+            location=[obs["lat"], obs["lon"]],
+            radius=8,
+            popup=f"{species_name}<br>Year: {obs['year']}",
+            color=color,
+            fill=True,
+            fillColor=color,
+            fillOpacity=0.7,
+        ).add_to(m)
+
+    # Add heatmap if enough points
+    if len(observations) >= 3:
+        heat_data = [[o["lat"], o["lon"], 1.0] for o in observations]
+        HeatMap(heat_data, radius=30, blur=20, max_zoom=10).add_to(m)
+
+    return m
+
+
+def create_multi_habitat_map(habitat_codes: List[str], show_legend: bool = True) -> folium.Map:
+    """Create a map showing multiple habitat type distributions."""
+
+    m = folium.Map(
+        location=[52.2, 5.5],
+        zoom_start=7,
+        tiles="cartodbpositron"
+    )
+
+    # Color palette for different habitats
+    colors = ["#e41a1c", "#377eb8", "#4daf4a", "#984ea3", "#ff7f00", "#a65628"]
+
+    legend_html = '<div style="position: fixed; bottom: 50px; left: 50px; z-index: 1000; background: white; padding: 10px; border-radius: 5px; border: 2px solid gray;">'
+    legend_html += '<b>Habitat Types</b><br>'
+
+    for i, hab_code in enumerate(habitat_codes[:6]):  # Max 6 habitats
+        color = colors[i % len(colors)]
+        observations = SAMPLE_OBSERVATIONS_NL.get(hab_code, [])
+
+        hab_name = EUNIS_HABITATS.get(hab_code, {}).get("name", hab_code)
+        legend_html += f'<span style="color:{color};">&#9679;</span> {hab_code}: {hab_name[:20]}...<br>'
+
+        for obs in observations:
+            folium.CircleMarker(
+                location=[obs["lat"], obs["lon"]],
+                radius=6 + (obs["score"] * 8),
+                popup=f"<b>{hab_code}</b>: {hab_name}<br>Score: {obs['score']:.2f}<br>Year: {obs['year']}",
+                color=color,
+                fill=True,
+                fillColor=color,
+                fillOpacity=0.6,
+            ).add_to(m)
+
+    legend_html += '</div>'
+
+    if show_legend and habitat_codes:
+        m.get_root().html.add_child(folium.Element(legend_html))
+
+    return m
+
+
+def create_overview_map() -> folium.Map:
+    """Create an overview map showing all sample data coverage."""
+
+    m = folium.Map(
+        location=[52.2, 5.5],
+        zoom_start=7,
+        tiles="cartodbpositron"
+    )
+
+    # Collect all observations
+    all_points = []
+    habitat_colors = {
+        "N10": "#1f77b4", "MA222": "#2ca02c", "Q11": "#d62728",
+        "S41": "#9467bd", "S31": "#8c564b", "T17": "#e377c2",
+        "T1H": "#7f7f7f", "R1A": "#bcbd22", "R35": "#17becf",
+        "T12": "#ff7f0e", "T3G": "#aec7e8"
+    }
+
+    for hab_code, observations in SAMPLE_OBSERVATIONS_NL.items():
+        color = habitat_colors.get(hab_code, "#333333")
+        for obs in observations:
+            all_points.append([obs["lat"], obs["lon"]])
+            folium.CircleMarker(
+                location=[obs["lat"], obs["lon"]],
+                radius=5,
+                popup=f"{hab_code}: {EUNIS_HABITATS.get(hab_code, {}).get('name', '')[:30]}",
+                color=color,
+                fill=True,
+                fillColor=color,
+                fillOpacity=0.5,
+            ).add_to(m)
+
+    # Add heatmap of all data
+    if all_points:
+        HeatMap([[p[0], p[1], 1.0] for p in all_points], radius=20, blur=15).add_to(m)
+
     return m
 
 
@@ -1149,8 +1349,25 @@ def main():
                 if predictions:
                     st.success(f"Found {len(predictions)} matching habitat type(s)!")
 
-                    # Show predictions chart
-                    st.plotly_chart(create_prediction_chart(predictions), use_container_width=True)
+                    # Results in two columns: chart and map
+                    result_col1, result_col2 = st.columns([1, 1])
+
+                    with result_col1:
+                        # Show predictions chart
+                        st.plotly_chart(create_prediction_chart(predictions), use_container_width=True)
+
+                    with result_col2:
+                        # Show predicted habitat distribution map
+                        st.markdown("**Predicted Habitat Distribution**")
+                        predicted_codes = [p["habitat_code"] for p in predictions[:5]]
+                        # Filter to only habitats with sample data
+                        codes_with_data = [c for c in predicted_codes if c in SAMPLE_OBSERVATIONS_NL]
+                        if codes_with_data:
+                            pred_map = create_multi_habitat_map(codes_with_data, show_legend=False)
+                            st_folium(pred_map, width=400, height=350, key="pred_map")
+                            st.caption("Map shows sample distribution of predicted habitat types in Netherlands")
+                        else:
+                            st.info("No distribution data available for predicted habitats in demo dataset")
 
                     # Export options
                     st.markdown("---")
@@ -1281,6 +1498,20 @@ def main():
                         )
                         st.plotly_chart(fig, use_container_width=True)
 
+                    # Species distribution map
+                    st.markdown("### Species Distribution")
+                    species_obs = SAMPLE_SPECIES_OBSERVATIONS.get(selected_species, [])
+                    if species_obs:
+                        st.markdown(f"**{len(species_obs)} observations** in sample dataset")
+                        species_map = create_species_distribution_map(selected_species)
+                        st_folium(species_map, width=600, height=350, key="species_dist_map")
+                        st.caption("Green: 2010 observations | Orange: 2000 observations")
+                    else:
+                        st.info(
+                            f"No distribution data for *{selected_species}* in demo dataset. "
+                            "Full plugin contains 98M+ GBIF occurrence records."
+                        )
+
                     # Detailed breakdown
                     st.markdown("### Habitat Associations")
 
@@ -1336,41 +1567,68 @@ def main():
 
     elif "Browse EUNIS" in mode:
         st.subheader("EUNIS Habitat Browser")
-        
+
         # Habitat selection
         habitat_options = {f"{code}: {info['name']}": code for code, info in EUNIS_HABITATS.items()}
         selected = st.selectbox("Select habitat type:", options=list(habitat_options.keys()))
-        
+
         if selected:
             hab_code = habitat_options[selected]
             hab_info = EUNIS_HABITATS[hab_code]
-            
+
+            # Header info
+            st.markdown(f"### {hab_code}: {hab_info['name']}")
+            st.markdown(f"**Description:** {hab_info['description']}")
+            st.markdown(f"**EUNIS Level:** {hab_info['level']}")
+
+            # Check for distribution data
+            has_distribution = hab_code in SAMPLE_OBSERVATIONS_NL
+
             col1, col2 = st.columns([1, 1])
-            
+
             with col1:
-                st.markdown(f"### {hab_code}: {hab_info['name']}")
-                st.markdown(f"**Description:** {hab_info['description']}")
-                st.markdown(f"**EUNIS Level:** {hab_info['level']}")
-                
-                # Indicator species
+                # Indicator species chart
                 indicators = INDICATOR_SPECIES.get(hab_code, {})
-                
-                if any(indicators.values()):
-                    st.markdown("---")
-                    st.markdown("### Indicator Species")
-                    
-                    for ind_type, label in [("diagnostic", "[D]"), ("dominant", "[Dom]"), ("constant", "[C]")]:
-                        species_list = indicators.get(ind_type, [])
-                        if species_list:
-                            st.markdown(f"**{label} {ind_type.capitalize()}:**")
-                            for sp in species_list:
-                                st.markdown(f"- *{sp['species']}* ({sp.get('common_name', '')}) - weight: {sp['weight']:.2f}")
-                else:
-                    st.info("Indicator species data not available for this habitat in the demo. Full plugin contains complete data.")
-            
-            with col2:
                 if any(indicators.values()):
                     st.plotly_chart(create_indicator_chart(indicators), use_container_width=True)
+
+            with col2:
+                # Distribution map
+                st.markdown("**Sample Distribution (Netherlands)**")
+                if has_distribution:
+                    browse_map = create_habitat_map(hab_code, None)
+                    st_folium(browse_map, width=400, height=350, key="browse_map")
+                    obs_count = len(SAMPLE_OBSERVATIONS_NL.get(hab_code, []))
+                    st.caption(f"{obs_count} sample observations shown")
+                else:
+                    # Show empty map with message
+                    empty_map = folium.Map(location=[52.2, 5.5], zoom_start=7, tiles="cartodbpositron")
+                    st_folium(empty_map, width=400, height=350, key="browse_map_empty")
+                    st.caption("No distribution data in demo. Full plugin has comprehensive coverage.")
+
+            # Indicator species list
+            st.markdown("---")
+            if any(indicators.values()):
+                st.markdown("### Indicator Species")
+
+                ind_col1, ind_col2, ind_col3 = st.columns(3)
+
+                with ind_col1:
+                    st.markdown("**[D] Diagnostic:**")
+                    for sp in indicators.get("diagnostic", []):
+                        st.markdown(f"- *{sp['species']}*  \n  {sp.get('common_name', '')} ({sp['weight']:.2f})")
+
+                with ind_col2:
+                    st.markdown("**[Dom] Dominant:**")
+                    for sp in indicators.get("dominant", []):
+                        st.markdown(f"- *{sp['species']}*  \n  {sp.get('common_name', '')} ({sp['weight']:.2f})")
+
+                with ind_col3:
+                    st.markdown("**[C] Constant:**")
+                    for sp in indicators.get("constant", []):
+                        st.markdown(f"- *{sp['species']}*  \n  {sp.get('common_name', '')} ({sp['weight']:.2f})")
+            else:
+                st.info("Indicator species data not available for this habitat in the demo. Full plugin contains complete data.")
     
     elif "View Habitat Distribution" in mode:
         st.subheader("Habitat Distribution Map")
@@ -1494,18 +1752,36 @@ def main():
         
         st.markdown("---")
         
-        st.markdown("### Data Tables")
-        
-        table_data = pd.DataFrame([
-            {"Table": "_10m_y2000", "Records": "22.8M", "Resolution": "10m", "Year": 2000},
-            {"Table": "_10m_y2010", "Records": "17.8M", "Resolution": "10m", "Year": 2010},
-            {"Table": "_100m_y2000", "Records": "32.3M", "Resolution": "100m", "Year": 2000},
-            {"Table": "_100m_y2010", "Records": "25.3M", "Resolution": "100m", "Year": 2010},
-        ])
-        st.dataframe(table_data, use_container_width=True)
-        
+        st.markdown("### Data Tables and Coverage")
+
+        db_col1, db_col2 = st.columns([1, 1])
+
+        with db_col1:
+            table_data = pd.DataFrame([
+                {"Table": "_10m_y2000", "Records": "22.8M", "Resolution": "10m", "Year": 2000},
+                {"Table": "_10m_y2010", "Records": "17.8M", "Resolution": "10m", "Year": 2010},
+                {"Table": "_100m_y2000", "Records": "32.3M", "Resolution": "100m", "Year": 2000},
+                {"Table": "_100m_y2010", "Records": "25.3M", "Resolution": "100m", "Year": 2010},
+            ])
+            st.dataframe(table_data, use_container_width=True)
+
+            st.markdown("**Coverage:**")
+            st.markdown(
+                "- Full European extent\n"
+                "- Netherlands: High-density coverage\n"
+                "- Two temporal snapshots (2000, 2010)\n"
+                "- Multi-resolution: 10m and 100m grids"
+            )
+
+        with db_col2:
+            st.markdown("**Demo Data Coverage (Netherlands)**")
+            overview_map = create_overview_map()
+            st_folium(overview_map, width=450, height=350, key="overview_map")
+            total_obs = sum(len(obs) for obs in SAMPLE_OBSERVATIONS_NL.values())
+            st.caption(f"{total_obs} sample observations across {len(SAMPLE_OBSERVATIONS_NL)} habitat types")
+
         st.markdown("---")
-        
+
         st.markdown("### This Demo")
         
         col1, col2, col3 = st.columns(3)
