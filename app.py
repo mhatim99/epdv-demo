@@ -190,6 +190,74 @@ EUNIS_HABITATS = {
 # Indicator species for each habitat (Diagnostic, Dominant, Constant with weights)
 # In full plugin: 15,119 species-habitat associations from eunis_species_values
 INDICATOR_SPECIES = {
+    # =========================================================================
+    # COASTAL HABITATS
+    # =========================================================================
+    "N10": {  # Atlantic, Baltic and Arctic sand beach
+        "diagnostic": [
+            {"species": "Cakile maritima", "weight": 0.95, "common_name": "Sea Rocket"},
+            {"species": "Salsola kali", "weight": 0.90, "common_name": "Prickly Saltwort"},
+            {"species": "Honckenya peploides", "weight": 0.85, "common_name": "Sea Sandwort"},
+            {"species": "Atriplex laciniata", "weight": 0.80, "common_name": "Frosted Orache"},
+        ],
+        "dominant": [
+            {"species": "Elymus farctus", "weight": 0.90, "common_name": "Sand Couch"},
+            {"species": "Ammophila arenaria", "weight": 0.85, "common_name": "Marram Grass"},
+        ],
+        "constant": [
+            {"species": "Beta vulgaris subsp. maritima", "weight": 0.70, "common_name": "Sea Beet"},
+            {"species": "Crambe maritima", "weight": 0.65, "common_name": "Sea Kale"},
+            {"species": "Eryngium maritimum", "weight": 0.60, "common_name": "Sea Holly"},
+        ]
+    },
+    "N11": {  # Atlantic and Baltic shingle beach
+        "diagnostic": [
+            {"species": "Crambe maritima", "weight": 0.95, "common_name": "Sea Kale"},
+            {"species": "Lathyrus japonicus", "weight": 0.90, "common_name": "Sea Pea"},
+            {"species": "Glaucium flavum", "weight": 0.85, "common_name": "Yellow Horned-poppy"},
+        ],
+        "dominant": [
+            {"species": "Rumex crispus", "weight": 0.80, "common_name": "Curled Dock"},
+            {"species": "Silene uniflora", "weight": 0.75, "common_name": "Sea Campion"},
+        ],
+        "constant": [
+            {"species": "Sedum acre", "weight": 0.70, "common_name": "Biting Stonecrop"},
+            {"species": "Honkenya peploides", "weight": 0.65, "common_name": "Sea Sandwort"},
+            {"species": "Tripleurospermum maritimum", "weight": 0.60, "common_name": "Sea Mayweed"},
+        ]
+    },
+    "MA1": {  # Littoral rock
+        "diagnostic": [
+            {"species": "Fucus spiralis", "weight": 0.95, "common_name": "Spiral Wrack"},
+            {"species": "Pelvetia canaliculata", "weight": 0.90, "common_name": "Channelled Wrack"},
+            {"species": "Fucus vesiculosus", "weight": 0.85, "common_name": "Bladder Wrack"},
+        ],
+        "dominant": [
+            {"species": "Ascophyllum nodosum", "weight": 0.90, "common_name": "Egg Wrack"},
+            {"species": "Fucus serratus", "weight": 0.85, "common_name": "Serrated Wrack"},
+        ],
+        "constant": [
+            {"species": "Enteromorpha intestinalis", "weight": 0.70, "common_name": "Gut Weed"},
+            {"species": "Ulva lactuca", "weight": 0.65, "common_name": "Sea Lettuce"},
+            {"species": "Chondrus crispus", "weight": 0.60, "common_name": "Irish Moss"},
+        ]
+    },
+    "MA22": {  # Littoral salt marsh (general)
+        "diagnostic": [
+            {"species": "Salicornia europaea", "weight": 0.95, "common_name": "Common Glasswort"},
+            {"species": "Suaeda maritima", "weight": 0.90, "common_name": "Annual Sea-blite"},
+            {"species": "Spartina anglica", "weight": 0.85, "common_name": "Common Cord-grass"},
+        ],
+        "dominant": [
+            {"species": "Puccinellia maritima", "weight": 0.90, "common_name": "Common Saltmarsh-grass"},
+            {"species": "Halimione portulacoides", "weight": 0.85, "common_name": "Sea Purslane"},
+        ],
+        "constant": [
+            {"species": "Aster tripolium", "weight": 0.75, "common_name": "Sea Aster"},
+            {"species": "Spergularia media", "weight": 0.70, "common_name": "Greater Sea-spurrey"},
+            {"species": "Cochlearia officinalis", "weight": 0.65, "common_name": "Common Scurvygrass"},
+        ]
+    },
     "MA222": {  # Atlantic upper saltmarsh
         "diagnostic": [
             {"species": "Limonium vulgare", "weight": 0.95, "common_name": "Common Sea Lavender"},
@@ -208,6 +276,26 @@ INDICATOR_SPECIES = {
             {"species": "Glaux maritima", "weight": 0.60, "common_name": "Sea Milkwort"},
         ]
     },
+    "MA223": {  # Atlantic lower saltmarsh
+        "diagnostic": [
+            {"species": "Salicornia europaea", "weight": 0.95, "common_name": "Common Glasswort"},
+            {"species": "Spartina anglica", "weight": 0.90, "common_name": "Common Cord-grass"},
+            {"species": "Suaeda maritima", "weight": 0.85, "common_name": "Annual Sea-blite"},
+        ],
+        "dominant": [
+            {"species": "Puccinellia maritima", "weight": 0.90, "common_name": "Common Saltmarsh-grass"},
+            {"species": "Spartina anglica", "weight": 0.85, "common_name": "Common Cord-grass"},
+        ],
+        "constant": [
+            {"species": "Aster tripolium", "weight": 0.75, "common_name": "Sea Aster"},
+            {"species": "Halimione portulacoides", "weight": 0.70, "common_name": "Sea Purslane"},
+            {"species": "Spergularia marina", "weight": 0.65, "common_name": "Lesser Sea-spurrey"},
+        ]
+    },
+    
+    # =========================================================================
+    # MIRES AND BOGS
+    # =========================================================================
     "Q11": {  # Raised bog
         "diagnostic": [
             {"species": "Sphagnum magellanicum", "weight": 0.95, "common_name": "Magellanic Bogmoss"},
@@ -224,6 +312,222 @@ INDICATOR_SPECIES = {
             {"species": "Erica tetralix", "weight": 0.75, "common_name": "Cross-leaved Heath"},
             {"species": "Vaccinium oxycoccos", "weight": 0.70, "common_name": "Cranberry"},
             {"species": "Narthecium ossifragum", "weight": 0.65, "common_name": "Bog Asphodel"},
+        ]
+    },
+    "Q12": {  # Blanket bog
+        "diagnostic": [
+            {"species": "Sphagnum papillosum", "weight": 0.95, "common_name": "Papillose Bogmoss"},
+            {"species": "Sphagnum capillifolium", "weight": 0.90, "common_name": "Red Bogmoss"},
+            {"species": "Racomitrium lanuginosum", "weight": 0.85, "common_name": "Woolly Fringe-moss"},
+            {"species": "Pleurozia purpurea", "weight": 0.80, "common_name": "Purple Spoonwort"},
+        ],
+        "dominant": [
+            {"species": "Eriophorum vaginatum", "weight": 0.90, "common_name": "Hare's-tail Cottongrass"},
+            {"species": "Calluna vulgaris", "weight": 0.85, "common_name": "Heather"},
+            {"species": "Trichophorum germanicum", "weight": 0.80, "common_name": "Deergrass"},
+        ],
+        "constant": [
+            {"species": "Erica tetralix", "weight": 0.75, "common_name": "Cross-leaved Heath"},
+            {"species": "Narthecium ossifragum", "weight": 0.70, "common_name": "Bog Asphodel"},
+            {"species": "Drosera rotundifolia", "weight": 0.65, "common_name": "Round-leaved Sundew"},
+        ]
+    },
+    "Q21": {  # Valley mire
+        "diagnostic": [
+            {"species": "Sphagnum fallax", "weight": 0.95, "common_name": "Flat-topped Bogmoss"},
+            {"species": "Sphagnum palustre", "weight": 0.90, "common_name": "Blunt-leaved Bogmoss"},
+            {"species": "Menyanthes trifoliata", "weight": 0.85, "common_name": "Bogbean"},
+            {"species": "Potentilla palustris", "weight": 0.80, "common_name": "Marsh Cinquefoil"},
+        ],
+        "dominant": [
+            {"species": "Molinia caerulea", "weight": 0.90, "common_name": "Purple Moor-grass"},
+            {"species": "Juncus acutiflorus", "weight": 0.85, "common_name": "Sharp-flowered Rush"},
+        ],
+        "constant": [
+            {"species": "Carex rostrata", "weight": 0.75, "common_name": "Bottle Sedge"},
+            {"species": "Hydrocotyle vulgaris", "weight": 0.70, "common_name": "Marsh Pennywort"},
+            {"species": "Viola palustris", "weight": 0.65, "common_name": "Marsh Violet"},
+        ]
+    },
+    "Q4": {  # Base-rich fen
+        "diagnostic": [
+            {"species": "Schoenus nigricans", "weight": 0.95, "common_name": "Black Bog-rush"},
+            {"species": "Cladium mariscus", "weight": 0.90, "common_name": "Great Fen-sedge"},
+            {"species": "Parnassia palustris", "weight": 0.85, "common_name": "Grass-of-Parnassus"},
+            {"species": "Epipactis palustris", "weight": 0.80, "common_name": "Marsh Helleborine"},
+        ],
+        "dominant": [
+            {"species": "Phragmites australis", "weight": 0.85, "common_name": "Common Reed"},
+            {"species": "Cladium mariscus", "weight": 0.80, "common_name": "Great Fen-sedge"},
+        ],
+        "constant": [
+            {"species": "Juncus subnodulosus", "weight": 0.75, "common_name": "Blunt-flowered Rush"},
+            {"species": "Mentha aquatica", "weight": 0.70, "common_name": "Water Mint"},
+            {"species": "Eupatorium cannabinum", "weight": 0.65, "common_name": "Hemp-agrimony"},
+        ]
+    },
+    "Q41": {  # Alkaline, calcareous fen
+        "diagnostic": [
+            {"species": "Schoenus nigricans", "weight": 0.95, "common_name": "Black Bog-rush"},
+            {"species": "Carex davalliana", "weight": 0.90, "common_name": "Davall's Sedge"},
+            {"species": "Primula farinosa", "weight": 0.85, "common_name": "Bird's-eye Primrose"},
+            {"species": "Tofieldia calyculata", "weight": 0.80, "common_name": "German Asphodel"},
+        ],
+        "dominant": [
+            {"species": "Schoenus nigricans", "weight": 0.90, "common_name": "Black Bog-rush"},
+            {"species": "Carex hostiana", "weight": 0.85, "common_name": "Tawny Sedge"},
+        ],
+        "constant": [
+            {"species": "Parnassia palustris", "weight": 0.75, "common_name": "Grass-of-Parnassus"},
+            {"species": "Pinguicula vulgaris", "weight": 0.70, "common_name": "Common Butterwort"},
+            {"species": "Eriophorum latifolium", "weight": 0.65, "common_name": "Broad-leaved Cottongrass"},
+        ]
+    },
+    "Q51": {  # Tall-sedge bed
+        "diagnostic": [
+            {"species": "Carex acutiformis", "weight": 0.95, "common_name": "Lesser Pond-sedge"},
+            {"species": "Carex riparia", "weight": 0.90, "common_name": "Greater Pond-sedge"},
+            {"species": "Carex paniculata", "weight": 0.85, "common_name": "Greater Tussock-sedge"},
+        ],
+        "dominant": [
+            {"species": "Carex acutiformis", "weight": 0.90, "common_name": "Lesser Pond-sedge"},
+            {"species": "Carex riparia", "weight": 0.85, "common_name": "Greater Pond-sedge"},
+            {"species": "Carex elata", "weight": 0.80, "common_name": "Tufted Sedge"},
+        ],
+        "constant": [
+            {"species": "Iris pseudacorus", "weight": 0.75, "common_name": "Yellow Iris"},
+            {"species": "Lysimachia vulgaris", "weight": 0.70, "common_name": "Yellow Loosestrife"},
+            {"species": "Lythrum salicaria", "weight": 0.65, "common_name": "Purple Loosestrife"},
+        ]
+    },
+    
+    # =========================================================================
+    # GRASSLANDS
+    # =========================================================================
+    "R1A": {  # Semi-dry calcareous grassland
+        "diagnostic": [
+            {"species": "Bromus erectus", "weight": 0.90, "common_name": "Upright Brome"},
+            {"species": "Hippocrepis comosa", "weight": 0.85, "common_name": "Horseshoe Vetch"},
+            {"species": "Anthyllis vulneraria", "weight": 0.80, "common_name": "Kidney Vetch"},
+            {"species": "Sanguisorba minor", "weight": 0.75, "common_name": "Salad Burnet"},
+        ],
+        "dominant": [
+            {"species": "Bromus erectus", "weight": 0.90, "common_name": "Upright Brome"},
+            {"species": "Brachypodium pinnatum", "weight": 0.80, "common_name": "Tor-grass"},
+            {"species": "Festuca ovina", "weight": 0.75, "common_name": "Sheep's Fescue"},
+        ],
+        "constant": [
+            {"species": "Thymus pulegioides", "weight": 0.70, "common_name": "Large Thyme"},
+            {"species": "Carlina vulgaris", "weight": 0.65, "common_name": "Carline Thistle"},
+            {"species": "Centaurea scabiosa", "weight": 0.60, "common_name": "Greater Knapweed"},
+        ]
+    },
+    "R1B": {  # Heavy-metal grassland
+        "diagnostic": [
+            {"species": "Viola calaminaria", "weight": 0.95, "common_name": "Yellow Zinc Violet"},
+            {"species": "Armeria maritima subsp. halleri", "weight": 0.90, "common_name": "Haller's Thrift"},
+            {"species": "Silene vulgaris var. humilis", "weight": 0.85, "common_name": "Calamine Campion"},
+            {"species": "Minuartia verna", "weight": 0.80, "common_name": "Spring Sandwort"},
+        ],
+        "dominant": [
+            {"species": "Festuca ovina", "weight": 0.85, "common_name": "Sheep's Fescue"},
+            {"species": "Agrostis capillaris", "weight": 0.80, "common_name": "Common Bent"},
+        ],
+        "constant": [
+            {"species": "Rumex acetosa", "weight": 0.70, "common_name": "Common Sorrel"},
+            {"species": "Plantago lanceolata", "weight": 0.65, "common_name": "Ribwort Plantain"},
+            {"species": "Thymus pulegioides", "weight": 0.60, "common_name": "Large Thyme"},
+        ]
+    },
+    "R21": {  # Mesic permanent pasture
+        "diagnostic": [
+            {"species": "Lolium perenne", "weight": 0.90, "common_name": "Perennial Ryegrass"},
+            {"species": "Cynosurus cristatus", "weight": 0.85, "common_name": "Crested Dog's-tail"},
+            {"species": "Trifolium repens", "weight": 0.80, "common_name": "White Clover"},
+        ],
+        "dominant": [
+            {"species": "Lolium perenne", "weight": 0.90, "common_name": "Perennial Ryegrass"},
+            {"species": "Poa pratensis", "weight": 0.85, "common_name": "Smooth Meadow-grass"},
+            {"species": "Festuca pratensis", "weight": 0.80, "common_name": "Meadow Fescue"},
+        ],
+        "constant": [
+            {"species": "Trifolium repens", "weight": 0.75, "common_name": "White Clover"},
+            {"species": "Bellis perennis", "weight": 0.70, "common_name": "Daisy"},
+            {"species": "Taraxacum officinale", "weight": 0.65, "common_name": "Dandelion"},
+            {"species": "Plantago major", "weight": 0.60, "common_name": "Greater Plantain"},
+        ]
+    },
+    "R22": {  # Low and medium altitude hay meadow
+        "diagnostic": [
+            {"species": "Arrhenatherum elatius", "weight": 0.90, "common_name": "False Oat-grass"},
+            {"species": "Crepis biennis", "weight": 0.85, "common_name": "Rough Hawk's-beard"},
+            {"species": "Tragopogon pratensis", "weight": 0.80, "common_name": "Goat's-beard"},
+            {"species": "Knautia arvensis", "weight": 0.75, "common_name": "Field Scabious"},
+        ],
+        "dominant": [
+            {"species": "Arrhenatherum elatius", "weight": 0.90, "common_name": "False Oat-grass"},
+            {"species": "Dactylis glomerata", "weight": 0.85, "common_name": "Cock's-foot"},
+            {"species": "Trisetum flavescens", "weight": 0.80, "common_name": "Yellow Oat-grass"},
+        ],
+        "constant": [
+            {"species": "Leucanthemum vulgare", "weight": 0.75, "common_name": "Oxeye Daisy"},
+            {"species": "Centaurea jacea", "weight": 0.70, "common_name": "Brown Knapweed"},
+            {"species": "Galium mollugo", "weight": 0.65, "common_name": "Hedge Bedstraw"},
+        ]
+    },
+    "R35": {  # Moist oligotrophic grassland
+        "diagnostic": [
+            {"species": "Cirsium dissectum", "weight": 0.90, "common_name": "Meadow Thistle"},
+            {"species": "Succisa pratensis", "weight": 0.85, "common_name": "Devil's-bit Scabious"},
+            {"species": "Juncus acutiflorus", "weight": 0.80, "common_name": "Sharp-flowered Rush"},
+        ],
+        "dominant": [
+            {"species": "Molinia caerulea", "weight": 0.90, "common_name": "Purple Moor-grass"},
+            {"species": "Juncus acutiflorus", "weight": 0.80, "common_name": "Sharp-flowered Rush"},
+        ],
+        "constant": [
+            {"species": "Lotus pedunculatus", "weight": 0.70, "common_name": "Greater Bird's-foot Trefoil"},
+            {"species": "Potentilla erecta", "weight": 0.65, "common_name": "Tormentil"},
+            {"species": "Carex panicea", "weight": 0.60, "common_name": "Carnation Sedge"},
+        ]
+    },
+    "R37": {  # Moist mesotrophic to eutrophic grassland
+        "diagnostic": [
+            {"species": "Caltha palustris", "weight": 0.90, "common_name": "Marsh-marigold"},
+            {"species": "Cardamine pratensis", "weight": 0.85, "common_name": "Cuckooflower"},
+            {"species": "Fritillaria meleagris", "weight": 0.80, "common_name": "Fritillary"},
+            {"species": "Senecio aquaticus", "weight": 0.75, "common_name": "Marsh Ragwort"},
+        ],
+        "dominant": [
+            {"species": "Alopecurus pratensis", "weight": 0.90, "common_name": "Meadow Foxtail"},
+            {"species": "Holcus lanatus", "weight": 0.85, "common_name": "Yorkshire-fog"},
+            {"species": "Poa trivialis", "weight": 0.80, "common_name": "Rough Meadow-grass"},
+        ],
+        "constant": [
+            {"species": "Ranunculus acris", "weight": 0.75, "common_name": "Meadow Buttercup"},
+            {"species": "Rumex acetosa", "weight": 0.70, "common_name": "Common Sorrel"},
+            {"species": "Lychnis flos-cuculi", "weight": 0.65, "common_name": "Ragged-robin"},
+        ]
+    },
+    
+    # =========================================================================
+    # HEATHLANDS
+    # =========================================================================
+    "S31": {  # Atlantic wet heath
+        "diagnostic": [
+            {"species": "Erica tetralix", "weight": 0.95, "common_name": "Cross-leaved Heath"},
+            {"species": "Narthecium ossifragum", "weight": 0.90, "common_name": "Bog Asphodel"},
+            {"species": "Drosera intermedia", "weight": 0.85, "common_name": "Oblong-leaved Sundew"},
+        ],
+        "dominant": [
+            {"species": "Erica tetralix", "weight": 0.90, "common_name": "Cross-leaved Heath"},
+            {"species": "Molinia caerulea", "weight": 0.85, "common_name": "Purple Moor-grass"},
+            {"species": "Calluna vulgaris", "weight": 0.80, "common_name": "Heather"},
+        ],
+        "constant": [
+            {"species": "Potentilla erecta", "weight": 0.75, "common_name": "Tormentil"},
+            {"species": "Juncus squarrosus", "weight": 0.70, "common_name": "Heath Rush"},
+            {"species": "Carex panicea", "weight": 0.65, "common_name": "Carnation Sedge"},
         ]
     },
     "S41": {  # Atlantic dry heath
@@ -243,6 +547,78 @@ INDICATOR_SPECIES = {
             {"species": "Potentilla erecta", "weight": 0.60, "common_name": "Tormentil"},
         ]
     },
+    "S42": {  # Continental dry heath
+        "diagnostic": [
+            {"species": "Calluna vulgaris", "weight": 0.95, "common_name": "Heather"},
+            {"species": "Genista pilosa", "weight": 0.90, "common_name": "Hairy Greenweed"},
+            {"species": "Genista germanica", "weight": 0.85, "common_name": "German Greenweed"},
+        ],
+        "dominant": [
+            {"species": "Calluna vulgaris", "weight": 0.95, "common_name": "Heather"},
+            {"species": "Vaccinium myrtillus", "weight": 0.80, "common_name": "Bilberry"},
+        ],
+        "constant": [
+            {"species": "Deschampsia flexuosa", "weight": 0.75, "common_name": "Wavy Hair-grass"},
+            {"species": "Festuca ovina", "weight": 0.70, "common_name": "Sheep's Fescue"},
+            {"species": "Hieracium pilosella", "weight": 0.65, "common_name": "Mouse-ear Hawkweed"},
+        ]
+    },
+    
+    # =========================================================================
+    # FORESTS
+    # =========================================================================
+    "T11": {  # Temperate Salix and Populus riparian forest
+        "diagnostic": [
+            {"species": "Salix alba", "weight": 0.95, "common_name": "White Willow"},
+            {"species": "Populus nigra", "weight": 0.90, "common_name": "Black Poplar"},
+            {"species": "Salix fragilis", "weight": 0.85, "common_name": "Crack Willow"},
+            {"species": "Populus alba", "weight": 0.80, "common_name": "White Poplar"},
+        ],
+        "dominant": [
+            {"species": "Salix alba", "weight": 0.90, "common_name": "White Willow"},
+            {"species": "Populus nigra", "weight": 0.85, "common_name": "Black Poplar"},
+        ],
+        "constant": [
+            {"species": "Urtica dioica", "weight": 0.75, "common_name": "Common Nettle"},
+            {"species": "Phalaris arundinacea", "weight": 0.70, "common_name": "Reed Canary-grass"},
+            {"species": "Humulus lupulus", "weight": 0.65, "common_name": "Hop"},
+        ]
+    },
+    "T12": {  # Temperate Fraxinus-Alnus forest
+        "diagnostic": [
+            {"species": "Alnus glutinosa", "weight": 0.95, "common_name": "Alder"},
+            {"species": "Fraxinus excelsior", "weight": 0.90, "common_name": "Ash"},
+            {"species": "Carex remota", "weight": 0.85, "common_name": "Remote Sedge"},
+            {"species": "Chrysosplenium oppositifolium", "weight": 0.80, "common_name": "Opposite-leaved Golden-saxifrage"},
+        ],
+        "dominant": [
+            {"species": "Alnus glutinosa", "weight": 0.95, "common_name": "Alder"},
+            {"species": "Fraxinus excelsior", "weight": 0.85, "common_name": "Ash"},
+        ],
+        "constant": [
+            {"species": "Filipendula ulmaria", "weight": 0.75, "common_name": "Meadowsweet"},
+            {"species": "Caltha palustris", "weight": 0.70, "common_name": "Marsh-marigold"},
+            {"species": "Cardamine amara", "weight": 0.65, "common_name": "Large Bitter-cress"},
+        ]
+    },
+    "T13": {  # Temperate hardwood riparian forest
+        "diagnostic": [
+            {"species": "Ulmus laevis", "weight": 0.95, "common_name": "European White Elm"},
+            {"species": "Ulmus minor", "weight": 0.90, "common_name": "Field Elm"},
+            {"species": "Quercus robur", "weight": 0.85, "common_name": "Pedunculate Oak"},
+            {"species": "Fraxinus excelsior", "weight": 0.80, "common_name": "Ash"},
+        ],
+        "dominant": [
+            {"species": "Quercus robur", "weight": 0.90, "common_name": "Pedunculate Oak"},
+            {"species": "Fraxinus excelsior", "weight": 0.85, "common_name": "Ash"},
+            {"species": "Ulmus minor", "weight": 0.80, "common_name": "Field Elm"},
+        ],
+        "constant": [
+            {"species": "Anemone nemorosa", "weight": 0.75, "common_name": "Wood Anemone"},
+            {"species": "Ranunculus ficaria", "weight": 0.70, "common_name": "Lesser Celandine"},
+            {"species": "Corydalis cava", "weight": 0.65, "common_name": "Hollowroot"},
+        ]
+    },
     "T17": {  # Fagus forest on non-acid soil
         "diagnostic": [
             {"species": "Fagus sylvatica", "weight": 0.95, "common_name": "European Beech"},
@@ -260,38 +636,37 @@ INDICATOR_SPECIES = {
             {"species": "Viola reichenbachiana", "weight": 0.65, "common_name": "Early Dog-violet"},
         ]
     },
-    "R1A": {  # Semi-dry calcareous grassland
+    "T18": {  # Fagus forest on acid soil
         "diagnostic": [
-            {"species": "Bromus erectus", "weight": 0.90, "common_name": "Upright Brome"},
-            {"species": "Hippocrepis comosa", "weight": 0.85, "common_name": "Horseshoe Vetch"},
-            {"species": "Anthyllis vulneraria", "weight": 0.80, "common_name": "Kidney Vetch"},
-            {"species": "Sanguisorba minor", "weight": 0.75, "common_name": "Salad Burnet"},
+            {"species": "Fagus sylvatica", "weight": 0.95, "common_name": "European Beech"},
+            {"species": "Luzula luzuloides", "weight": 0.90, "common_name": "White Woodrush"},
+            {"species": "Deschampsia flexuosa", "weight": 0.85, "common_name": "Wavy Hair-grass"},
         ],
         "dominant": [
-            {"species": "Bromus erectus", "weight": 0.90, "common_name": "Upright Brome"},
-            {"species": "Brachypodium pinnatum", "weight": 0.80, "common_name": "Tor-grass"},
-            {"species": "Festuca ovina", "weight": 0.75, "common_name": "Sheep's Fescue"},
+            {"species": "Fagus sylvatica", "weight": 0.95, "common_name": "European Beech"},
+            {"species": "Quercus petraea", "weight": 0.75, "common_name": "Sessile Oak"},
         ],
         "constant": [
-            {"species": "Thymus pulegioides", "weight": 0.70, "common_name": "Large Thyme"},
-            {"species": "Carlina vulgaris", "weight": 0.65, "common_name": "Carline Thistle"},
-            {"species": "Centaurea scabiosa", "weight": 0.60, "common_name": "Greater Knapweed"},
+            {"species": "Vaccinium myrtillus", "weight": 0.75, "common_name": "Bilberry"},
+            {"species": "Pteridium aquilinum", "weight": 0.70, "common_name": "Bracken"},
+            {"species": "Maianthemum bifolium", "weight": 0.65, "common_name": "May Lily"},
         ]
     },
-    "R35": {  # Moist oligotrophic grassland
+    "T1F": {  # Broadleaved swamp forest on acid peat
         "diagnostic": [
-            {"species": "Cirsium dissectum", "weight": 0.90, "common_name": "Meadow Thistle"},
-            {"species": "Succisa pratensis", "weight": 0.85, "common_name": "Devil's-bit Scabious"},
-            {"species": "Juncus acutiflorus", "weight": 0.80, "common_name": "Sharp-flowered Rush"},
+            {"species": "Betula pubescens", "weight": 0.95, "common_name": "Downy Birch"},
+            {"species": "Alnus glutinosa", "weight": 0.90, "common_name": "Alder"},
+            {"species": "Sphagnum palustre", "weight": 0.85, "common_name": "Blunt-leaved Bogmoss"},
+            {"species": "Thelypteris palustris", "weight": 0.80, "common_name": "Marsh Fern"},
         ],
         "dominant": [
-            {"species": "Molinia caerulea", "weight": 0.90, "common_name": "Purple Moor-grass"},
-            {"species": "Juncus acutiflorus", "weight": 0.80, "common_name": "Sharp-flowered Rush"},
+            {"species": "Betula pubescens", "weight": 0.90, "common_name": "Downy Birch"},
+            {"species": "Alnus glutinosa", "weight": 0.85, "common_name": "Alder"},
         ],
         "constant": [
-            {"species": "Lotus pedunculatus", "weight": 0.70, "common_name": "Greater Bird's-foot Trefoil"},
-            {"species": "Potentilla erecta", "weight": 0.65, "common_name": "Tormentil"},
-            {"species": "Carex panicea", "weight": 0.60, "common_name": "Carnation Sedge"},
+            {"species": "Carex elongata", "weight": 0.75, "common_name": "Elongated Sedge"},
+            {"species": "Calla palustris", "weight": 0.70, "common_name": "Bog Arum"},
+            {"species": "Solanum dulcamara", "weight": 0.65, "common_name": "Bittersweet"},
         ]
     },
     "T1H": {  # Temperate Quercus forest
@@ -311,16 +686,40 @@ INDICATOR_SPECIES = {
             {"species": "Deschampsia flexuosa", "weight": 0.65, "common_name": "Wavy Hair-grass"},
         ]
     },
+    "T3F": {  # Picea forest on acid soil
+        "diagnostic": [
+            {"species": "Picea abies", "weight": 0.95, "common_name": "Norway Spruce"},
+            {"species": "Bazzania trilobata", "weight": 0.90, "common_name": "Greater Whipwort"},
+            {"species": "Sphagnum girgensohnii", "weight": 0.85, "common_name": "Girgensohn's Bogmoss"},
+        ],
+        "dominant": [
+            {"species": "Picea abies", "weight": 0.95, "common_name": "Norway Spruce"},
+            {"species": "Vaccinium myrtillus", "weight": 0.80, "common_name": "Bilberry"},
+        ],
+        "constant": [
+            {"species": "Deschampsia flexuosa", "weight": 0.75, "common_name": "Wavy Hair-grass"},
+            {"species": "Oxalis acetosella", "weight": 0.70, "common_name": "Wood Sorrel"},
+            {"species": "Dicranum scoparium", "weight": 0.65, "common_name": "Broom Fork-moss"},
+        ]
+    },
+    "T3G": {  # Pinus sylvestris forest
+        "diagnostic": [
+            {"species": "Pinus sylvestris", "weight": 0.95, "common_name": "Scots Pine"},
+            {"species": "Pyrola minor", "weight": 0.85, "common_name": "Common Wintergreen"},
+            {"species": "Monotropa hypopitys", "weight": 0.80, "common_name": "Yellow Bird's-nest"},
+        ],
+        "dominant": [
+            {"species": "Pinus sylvestris", "weight": 0.95, "common_name": "Scots Pine"},
+            {"species": "Calluna vulgaris", "weight": 0.80, "common_name": "Heather"},
+        ],
+        "constant": [
+            {"species": "Vaccinium myrtillus", "weight": 0.75, "common_name": "Bilberry"},
+            {"species": "Vaccinium vitis-idaea", "weight": 0.70, "common_name": "Cowberry"},
+            {"species": "Deschampsia flexuosa", "weight": 0.65, "common_name": "Wavy Hair-grass"},
+            {"species": "Pleurozium schreberi", "weight": 0.60, "common_name": "Schreber's Big Red Stem Moss"},
+        ]
+    },
 }
-
-# Add default empty indicators for habitats without detailed data
-for hab_code in EUNIS_HABITATS:
-    if hab_code not in INDICATOR_SPECIES:
-        INDICATOR_SPECIES[hab_code] = {
-            "diagnostic": [],
-            "dominant": [],
-            "constant": []
-        }
 
 # Build species lookup table (species -> habitats it indicates)
 SPECIES_TO_HABITATS = {}
@@ -343,6 +742,11 @@ ALL_SPECIES = sorted(list(SPECIES_TO_HABITATS.keys()))
 # Sample observation coordinates for Netherlands visualization (EPSG:4326)
 # In full plugin: 98M+ records from spatial tables
 SAMPLE_OBSERVATIONS_NL = {
+    "N10": [  # Sand beach - North Sea coast
+        {"lat": 53.20, "lon": 4.85, "score": 0.88, "year": 2010},
+        {"lat": 52.95, "lon": 4.72, "score": 0.85, "year": 2010},
+        {"lat": 52.45, "lon": 4.55, "score": 0.82, "year": 2000},
+    ],
     "MA222": [  # Atlantic upper saltmarsh - Wadden Sea area
         {"lat": 53.45, "lon": 5.75, "score": 0.92, "year": 2010},
         {"lat": 53.40, "lon": 5.65, "score": 0.88, "year": 2010},
@@ -351,7 +755,7 @@ SAMPLE_OBSERVATIONS_NL = {
         {"lat": 53.38, "lon": 6.25, "score": 0.87, "year": 2010},
         {"lat": 53.30, "lon": 5.55, "score": 0.82, "year": 2000},
         {"lat": 53.25, "lon": 5.70, "score": 0.78, "year": 2000},
-        {"lat": 51.65, "lon": 4.05, "score": 0.85, "year": 2010},  # Zeeland
+        {"lat": 51.65, "lon": 4.05, "score": 0.85, "year": 2010},
         {"lat": 51.58, "lon": 3.95, "score": 0.80, "year": 2010},
     ],
     "Q11": [  # Raised bog - Drenthe/Overijssel
@@ -369,16 +773,41 @@ SAMPLE_OBSERVATIONS_NL = {
         {"lat": 52.05, "lon": 5.75, "score": 0.80, "year": 2000},
         {"lat": 52.30, "lon": 6.00, "score": 0.75, "year": 2000},
     ],
+    "S31": [  # Atlantic wet heath - Veluwe/Drenthe
+        {"lat": 52.40, "lon": 6.20, "score": 0.88, "year": 2010},
+        {"lat": 52.35, "lon": 6.15, "score": 0.85, "year": 2010},
+        {"lat": 52.45, "lon": 6.25, "score": 0.82, "year": 2000},
+    ],
     "T17": [  # Beech forest - Limburg hills
         {"lat": 50.85, "lon": 5.90, "score": 0.95, "year": 2010},
         {"lat": 50.80, "lon": 5.85, "score": 0.92, "year": 2010},
         {"lat": 50.82, "lon": 5.95, "score": 0.88, "year": 2010},
         {"lat": 50.78, "lon": 5.80, "score": 0.85, "year": 2000},
     ],
+    "T1H": [  # Oak forest - Veluwe/Limburg
+        {"lat": 52.08, "lon": 5.92, "score": 0.90, "year": 2010},
+        {"lat": 52.12, "lon": 5.88, "score": 0.87, "year": 2010},
+        {"lat": 50.90, "lon": 5.82, "score": 0.85, "year": 2000},
+    ],
     "R1A": [  # Calcareous grassland - Limburg
         {"lat": 50.88, "lon": 5.75, "score": 0.90, "year": 2010},
         {"lat": 50.85, "lon": 5.80, "score": 0.88, "year": 2010},
         {"lat": 50.82, "lon": 5.70, "score": 0.82, "year": 2000},
+    ],
+    "R35": [  # Moist oligotrophic grassland
+        {"lat": 52.55, "lon": 5.45, "score": 0.87, "year": 2010},
+        {"lat": 52.50, "lon": 5.50, "score": 0.84, "year": 2010},
+        {"lat": 52.60, "lon": 5.40, "score": 0.80, "year": 2000},
+    ],
+    "T12": [  # Alder-Ash forest
+        {"lat": 52.35, "lon": 5.25, "score": 0.88, "year": 2010},
+        {"lat": 52.30, "lon": 5.30, "score": 0.85, "year": 2010},
+        {"lat": 51.95, "lon": 5.85, "score": 0.82, "year": 2000},
+    ],
+    "T3G": [  # Pine forest - Veluwe
+        {"lat": 52.18, "lon": 5.78, "score": 0.92, "year": 2010},
+        {"lat": 52.22, "lon": 5.82, "score": 0.89, "year": 2010},
+        {"lat": 52.15, "lon": 5.75, "score": 0.86, "year": 2000},
     ],
 }
 
@@ -585,7 +1014,7 @@ def main():
     # Sidebar - Mode Selection
     with st.sidebar:
         st.header("Analysis Mode")
-
+        
         mode = st.radio(
             "Select function:",
             [
@@ -618,6 +1047,14 @@ def main():
             "- European Vegetation Archive\n"
             "- EUNIS habitat classification"
         )
+        
+        st.markdown("---")
+        st.markdown(
+            f"**Demo statistics:**\n"
+            f"- Habitat types: {len(EUNIS_HABITATS)}\n"
+            f"- Indicator species: {len(ALL_SPECIES)}\n"
+            f"- Species-habitat links: {sum(len(v) for v in SPECIES_TO_HABITATS.values())}"
+        )
     
     # Main content based on mode
     if "Predict Habitat" in mode:
@@ -639,19 +1076,23 @@ def main():
             
             # Quick examples
             st.markdown("**Quick examples:**")
-            example_col1, example_col2, example_col3 = st.columns(3)
+            example_col1, example_col2, example_col3, example_col4 = st.columns(4)
 
             with example_col1:
-                if st.button("Saltmarsh species"):
+                if st.button("Saltmarsh"):
                     st.session_state["species_example"] = "Limonium vulgare\nPuccinellia maritima\nAster tripolium\nPlantago maritima\nArmeria maritima"
 
             with example_col2:
-                if st.button("Heath species"):
+                if st.button("Dry heath"):
                     st.session_state["species_example"] = "Calluna vulgaris\nErica cinerea\nDeschampsia flexuosa\nCarex pilulifera\nPotentilla erecta"
 
             with example_col3:
-                if st.button("Beech forest species"):
+                if st.button("Beech forest"):
                     st.session_state["species_example"] = "Fagus sylvatica\nGalium odoratum\nMercurialis perennis\nAnemone nemorosa\nAllium ursinum"
+            
+            with example_col4:
+                if st.button("Raised bog"):
+                    st.session_state["species_example"] = "Sphagnum magellanicum\nAndromeda polifolia\nDrosera rotundifolia\nEriophorum vaginatum\nVaccinium oxycoccos"
             
             if "species_example" in st.session_state:
                 species_input = st.session_state["species_example"]
@@ -684,7 +1125,7 @@ def main():
                     st.subheader("Detailed Results")
                     
                     for i, pred in enumerate(predictions[:5]):  # Top 5
-                        with st.expander(f"**{pred['habitat_code']}**: {pred['habitat_name']} — Score: {pred['score']:.1%}", expanded=(i==0)):
+                        with st.expander(f"**{pred['habitat_code']}**: {pred['habitat_name']} - Score: {pred['score']:.1%}", expanded=(i==0)):
                             st.markdown(f"**Description:** {EUNIS_HABITATS[pred['habitat_code']]['description']}")
                             st.markdown(f"**Matched species:** {pred['total_matched']}")
                             
@@ -727,7 +1168,9 @@ def main():
                         if species_list:
                             st.markdown(f"**{label} {ind_type.capitalize()}:**")
                             for sp in species_list:
-                                st.markdown(f"- *{sp['species']}* ({sp.get('common_name', '')}) — weight: {sp['weight']:.2f}")
+                                st.markdown(f"- *{sp['species']}* ({sp.get('common_name', '')}) - weight: {sp['weight']:.2f}")
+                else:
+                    st.info("Indicator species data not available for this habitat in the demo. Full plugin contains complete data.")
             
             with col2:
                 if any(indicators.values()):
@@ -797,17 +1240,29 @@ def main():
         
         st.markdown("---")
         
+        st.markdown("### This Demo")
+        
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("Habitat Types", len(EUNIS_HABITATS))
+        with col2:
+            st.metric("Indicator Species", len(ALL_SPECIES))
+        with col3:
+            st.metric("Species-Habitat Links", sum(len(v) for v in SPECIES_TO_HABITATS.values()))
+        
+        st.markdown("---")
+        
         st.markdown("### Algorithm")
         st.code("""
 For each grid cell (x, y):
     1. Identify all species observed at location
     2. For target habitat type:
-       - Get diagnostic species and their weights
-       - Get dominant species and their weights  
-       - Get constant species and their weights
+       - Get diagnostic species and their weights (multiplier: 1.5x)
+       - Get dominant species and their weights (multiplier: 1.2x)
+       - Get constant species and their weights (multiplier: 1.0x)
     3. Calculate score:
-       score = Σ(species_weight × type_multiplier × presence)
-    4. If score ≥ threshold:
+       score = Sum(species_weight x type_multiplier x presence) / total_possible
+    4. If score >= threshold:
        - Mark cell as potential habitat
        - Store probability score
     5. Return georeferenced results
@@ -819,7 +1274,7 @@ For each grid cell (x, y):
         "<div style='text-align: center; color: #666;'>"
         "EPDV Web Demo | "
         "Full QGIS plugin in development with WENR Team Earth Informatics | "
-        "© 2025 Mohamed Z. Hatim, Wageningen University & Research"
+        "2025 Mohamed Z. Hatim, Wageningen University & Research"
         "</div>",
         unsafe_allow_html=True
     )
