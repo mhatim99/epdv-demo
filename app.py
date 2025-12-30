@@ -1250,23 +1250,23 @@ def main():
         with col3:
             st.metric("Species-Habitat Links", sum(len(v) for v in SPECIES_TO_HABITATS.values()))
         
-        st.markdown("---")
+        #st.markdown("---")
         
-        st.markdown("### Algorithm")
-        st.code("""
-For each grid cell (x, y):
-    1. Identify all species observed at location
-    2. For target habitat type:
-       - Get diagnostic species and their weights (multiplier: 1.5x)
-       - Get dominant species and their weights (multiplier: 1.2x)
-       - Get constant species and their weights (multiplier: 1.0x)
-    3. Calculate score:
-       score = Sum(species_weight x type_multiplier x presence) / total_possible
-    4. If score >= threshold:
-       - Mark cell as potential habitat
-       - Store probability score
-    5. Return georeferenced results
-        """, language="python")
+        #st.markdown("### Algorithm")
+        #st.code("""
+#For each grid cell (x, y):
+    #1. Identify all species observed at location
+    #2. For target habitat type:
+       #- Get diagnostic species and their weights (multiplier: 1.5x)
+       #- Get dominant species and their weights (multiplier: 1.2x)
+       #- Get constant species and their weights (multiplier: 1.0x)
+   # 3. Calculate score:
+       #score = Sum(species_weight x type_multiplier x presence) / total_possible
+    #4. If score >= threshold:
+       #- Mark cell as potential habitat
+       #- Store probability score
+   # 5. Return georeferenced results
+       # """, language="python")
     
     # Footer
     st.markdown("---")
