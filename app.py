@@ -1337,99 +1337,109 @@ def main():
             st.markdown("**Input summary:**")
             st.metric("Species entered", len(species_list))
 
+        # Run prediction when button is clicked
         if st.button("Predict Habitat", type="primary"):
             if species_list:
                 with st.spinner("Analyzing species composition..."):
                     predictions = predict_habitat_from_species(species_list, threshold)
 
-                # Store predictions for export
+                # Store predictions in session state so they persist across reruns
                 st.session_state["last_predictions"] = predictions
-                st.session_state["last_species_input"] = species_list
-
-                if predictions:
-                    st.success(f"Found {len(predictions)} matching habitat type(s)!")
-
-                    # Results in two columns: chart and map
-                    result_col1, result_col2 = st.columns([1, 1])
-
-                    with result_col1:
-                        # Show predictions chart
-                        st.plotly_chart(create_prediction_chart(predictions), use_container_width=True)
-
-                    with result_col2:
-                        # Show predicted habitat distribution map
-                        st.markdown("**Predicted Habitat Distribution**")
-                        predicted_codes = [p["habitat_code"] for p in predictions[:5]]
-                        # Filter to only habitats with sample data
-                        codes_with_data = [c for c in predicted_codes if c in SAMPLE_OBSERVATIONS_NL]
-                        if codes_with_data:
-                            pred_map = create_multi_habitat_map(codes_with_data, show_legend=False)
-                            st_folium(pred_map, width=400, height=350, key="pred_map")
-                            st.caption("Map shows sample distribution of predicted habitat types in Netherlands")
-                        else:
-                            st.info("No distribution data available for predicted habitats in demo dataset")
-
-                    # Export options
-                    st.markdown("---")
-                    export_col1, export_col2, export_col3 = st.columns(3)
-
-                    # Prepare export data
-                    export_data = []
-                    for pred in predictions:
-                        export_data.append({
-                            "habitat_code": pred["habitat_code"],
-                            "habitat_name": pred["habitat_name"],
-                            "score": pred["score"],
-                            "matched_diagnostic": ", ".join([s["species"] for s in pred["matched_species"].get("diagnostic", [])]),
-                            "matched_dominant": ", ".join([s["species"] for s in pred["matched_species"].get("dominant", [])]),
-                            "matched_constant": ", ".join([s["species"] for s in pred["matched_species"].get("constant", [])]),
-                            "total_matched": pred["total_matched"]
-                        })
-                    export_df = pd.DataFrame(export_data)
-
-                    with export_col1:
-                        csv_buffer = io.StringIO()
-                        export_df.to_csv(csv_buffer, index=False)
-                        st.download_button(
-                            label="Download CSV",
-                            data=csv_buffer.getvalue(),
-                            file_name="epdv_predictions.csv",
-                            mime="text/csv"
-                        )
-
-                    with export_col2:
-                        json_export = {
-                            "input_species": species_list,
-                            "threshold": threshold,
-                            "predictions": export_data
-                        }
-                        st.download_button(
-                            label="Download JSON",
-                            data=json.dumps(json_export, indent=2),
-                            file_name="epdv_predictions.json",
-                            mime="application/json"
-                        )
-
-                    with export_col3:
-                        st.markdown(f"*{len(species_list)} species analyzed*")
-
-                    # Detailed results
-                    st.markdown("---")
-                    st.subheader("Detailed Results")
-
-                    for i, pred in enumerate(predictions[:5]):  # Top 5
-                        with st.expander(f"**{pred['habitat_code']}**: {pred['habitat_name']} - Score: {pred['score']:.1%}", expanded=(i==0)):
-                            st.markdown(f"**Description:** {EUNIS_HABITATS[pred['habitat_code']]['description']}")
-                            st.markdown(f"**Matched species:** {pred['total_matched']}")
-
-                            for ind_type in ["diagnostic", "dominant", "constant"]:
-                                matched = pred["matched_species"].get(ind_type, [])
-                                if matched:
-                                    st.markdown(f"*{ind_type.capitalize()}:* " + ", ".join([s["species"] for s in matched]))
-                else:
-                    st.warning("No habitat types matched with the given threshold. Try lowering the threshold or adding more species.")
+                st.session_state["last_species_input"] = species_list.copy()
+                st.session_state["last_threshold"] = threshold
+                st.session_state["show_predictions"] = True
             else:
                 st.error("Please enter at least one species name.")
+                st.session_state["show_predictions"] = False
+
+        # Display results from session state (persists across reruns)
+        if st.session_state.get("show_predictions") and st.session_state.get("last_predictions"):
+            predictions = st.session_state["last_predictions"]
+            stored_species = st.session_state.get("last_species_input", [])
+            stored_threshold = st.session_state.get("last_threshold", threshold)
+
+            st.success(f"Found {len(predictions)} matching habitat type(s)!")
+
+            # Results in two columns: chart and map
+            result_col1, result_col2 = st.columns([1, 1])
+
+            with result_col1:
+                # Show predictions chart
+                st.plotly_chart(create_prediction_chart(predictions), use_container_width=True)
+
+            with result_col2:
+                # Show predicted habitat distribution map
+                st.markdown("**Predicted Habitat Distribution**")
+                predicted_codes = [p["habitat_code"] for p in predictions[:5]]
+                # Filter to only habitats with sample data
+                codes_with_data = [c for c in predicted_codes if c in SAMPLE_OBSERVATIONS_NL]
+                if codes_with_data:
+                    pred_map = create_multi_habitat_map(codes_with_data, show_legend=False)
+                    st_folium(pred_map, width=400, height=350, key="pred_map")
+                    st.caption("Map shows sample distribution of predicted habitat types in Netherlands")
+                else:
+                    st.info("No distribution data available for predicted habitats in demo dataset")
+
+            # Export options
+            st.markdown("---")
+            export_col1, export_col2, export_col3 = st.columns(3)
+
+            # Prepare export data
+            export_data = []
+            for pred in predictions:
+                export_data.append({
+                    "habitat_code": pred["habitat_code"],
+                    "habitat_name": pred["habitat_name"],
+                    "score": pred["score"],
+                    "matched_diagnostic": ", ".join([s["species"] for s in pred["matched_species"].get("diagnostic", [])]),
+                    "matched_dominant": ", ".join([s["species"] for s in pred["matched_species"].get("dominant", [])]),
+                    "matched_constant": ", ".join([s["species"] for s in pred["matched_species"].get("constant", [])]),
+                    "total_matched": pred["total_matched"]
+                })
+            export_df = pd.DataFrame(export_data)
+
+            with export_col1:
+                csv_buffer = io.StringIO()
+                export_df.to_csv(csv_buffer, index=False)
+                st.download_button(
+                    label="Download CSV",
+                    data=csv_buffer.getvalue(),
+                    file_name="epdv_predictions.csv",
+                    mime="text/csv"
+                )
+
+            with export_col2:
+                json_export = {
+                    "input_species": stored_species,
+                    "threshold": stored_threshold,
+                    "predictions": export_data
+                }
+                st.download_button(
+                    label="Download JSON",
+                    data=json.dumps(json_export, indent=2),
+                    file_name="epdv_predictions.json",
+                    mime="application/json"
+                )
+
+            with export_col3:
+                st.markdown(f"*{len(stored_species)} species analyzed*")
+
+            # Detailed results
+            st.markdown("---")
+            st.subheader("Detailed Results")
+
+            for i, pred in enumerate(predictions[:5]):  # Top 5
+                with st.expander(f"**{pred['habitat_code']}**: {pred['habitat_name']} - Score: {pred['score']:.1%}", expanded=(i==0)):
+                    st.markdown(f"**Description:** {EUNIS_HABITATS[pred['habitat_code']]['description']}")
+                    st.markdown(f"**Matched species:** {pred['total_matched']}")
+
+                    for ind_type in ["diagnostic", "dominant", "constant"]:
+                        matched = pred["matched_species"].get(ind_type, [])
+                        if matched:
+                            st.markdown(f"*{ind_type.capitalize()}:* " + ", ".join([s["species"] for s in matched]))
+
+        elif st.session_state.get("show_predictions") and not st.session_state.get("last_predictions"):
+            st.warning("No habitat types matched with the given threshold. Try lowering the threshold or adding more species.")
 
     elif "Species Lookup" in mode:
         st.subheader("Species Lookup")
