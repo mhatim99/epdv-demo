@@ -16,6 +16,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from typing import Optional, Dict, List, Tuple
 import json
+import io
 
 # ============================================================================
 # CONFIGURATION
@@ -1019,6 +1020,7 @@ def main():
             "Select function:",
             [
                 "Predict Habitat from Species",
+                "Species Lookup",
                 "Browse EUNIS Habitats",
                 "View Habitat Distribution",
                 "Database Statistics"
@@ -1063,41 +1065,64 @@ def main():
             "Enter a list of species observed at a location. "
             "The algorithm will predict the most likely EUNIS habitat type."
         )
-        
+
         col1, col2 = st.columns([2, 1])
-        
+
         with col1:
-            # Species input
-            species_input = st.text_area(
-                "Enter species (one per line):",
-                placeholder="Calluna vulgaris\nErica cinerea\nDeschampsia flexuosa\nPotentilla erecta",
-                height=200,
+            # Input method selection
+            input_method = st.radio(
+                "Input method:",
+                ["Select from database", "Type species names"],
+                horizontal=True
             )
-            
+
+            if input_method == "Select from database":
+                # Multiselect with search
+                selected_species = st.multiselect(
+                    "Search and select species:",
+                    options=ALL_SPECIES,
+                    default=None,
+                    help="Start typing to search. Select multiple species.",
+                    placeholder="Type to search species..."
+                )
+                species_list = selected_species
+            else:
+                # Free text input
+                species_input = st.text_area(
+                    "Enter species (one per line):",
+                    placeholder="Calluna vulgaris\nErica cinerea\nDeschampsia flexuosa\nPotentilla erecta",
+                    height=150,
+                )
+                species_list = [s.strip() for s in species_input.strip().split("\n") if s.strip()] if species_input.strip() else []
+
             # Quick examples
             st.markdown("**Quick examples:**")
             example_col1, example_col2, example_col3, example_col4 = st.columns(4)
 
             with example_col1:
                 if st.button("Saltmarsh"):
-                    st.session_state["species_example"] = "Limonium vulgare\nPuccinellia maritima\nAster tripolium\nPlantago maritima\nArmeria maritima"
+                    st.session_state["species_multiselect"] = ["Limonium vulgare", "Puccinellia maritima", "Aster tripolium", "Plantago maritima", "Armeria maritima"]
 
             with example_col2:
                 if st.button("Dry heath"):
-                    st.session_state["species_example"] = "Calluna vulgaris\nErica cinerea\nDeschampsia flexuosa\nCarex pilulifera\nPotentilla erecta"
+                    st.session_state["species_multiselect"] = ["Calluna vulgaris", "Erica cinerea", "Deschampsia flexuosa", "Carex pilulifera", "Potentilla erecta"]
 
             with example_col3:
                 if st.button("Beech forest"):
-                    st.session_state["species_example"] = "Fagus sylvatica\nGalium odoratum\nMercurialis perennis\nAnemone nemorosa\nAllium ursinum"
-            
+                    st.session_state["species_multiselect"] = ["Fagus sylvatica", "Galium odoratum", "Mercurialis perennis", "Anemone nemorosa", "Allium ursinum"]
+
             with example_col4:
                 if st.button("Raised bog"):
-                    st.session_state["species_example"] = "Sphagnum magellanicum\nAndromeda polifolia\nDrosera rotundifolia\nEriophorum vaginatum\nVaccinium oxycoccos"
-            
-            if "species_example" in st.session_state:
-                species_input = st.session_state["species_example"]
-                st.text_area("Species list:", value=species_input, height=150, disabled=True)
-        
+                    st.session_state["species_multiselect"] = ["Sphagnum magellanicum", "Andromeda polifolia", "Drosera rotundifolia", "Eriophorum vaginatum", "Vaccinium oxycoccos"]
+
+            # Apply example if selected
+            if "species_multiselect" in st.session_state and input_method == "Select from database":
+                # Filter to only species that exist in our database
+                valid_species = [sp for sp in st.session_state["species_multiselect"] if sp in ALL_SPECIES]
+                if valid_species and not selected_species:
+                    st.info(f"Example loaded: {', '.join(valid_species)}")
+                    species_list = valid_species
+
         with col2:
             threshold = st.slider(
                 "Prediction threshold:",
@@ -1107,28 +1132,79 @@ def main():
                 step=0.1,
                 help="Minimum score to include a habitat in results"
             )
-        
+
+            st.markdown("---")
+            st.markdown("**Input summary:**")
+            st.metric("Species entered", len(species_list))
+
         if st.button("Predict Habitat", type="primary"):
-            if species_input.strip():
-                species_list = [s.strip() for s in species_input.strip().split("\n") if s.strip()]
-                
+            if species_list:
                 with st.spinner("Analyzing species composition..."):
                     predictions = predict_habitat_from_species(species_list, threshold)
-                
+
+                # Store predictions for export
+                st.session_state["last_predictions"] = predictions
+                st.session_state["last_species_input"] = species_list
+
                 if predictions:
                     st.success(f"Found {len(predictions)} matching habitat type(s)!")
-                    
+
                     # Show predictions chart
                     st.plotly_chart(create_prediction_chart(predictions), use_container_width=True)
-                    
+
+                    # Export options
+                    st.markdown("---")
+                    export_col1, export_col2, export_col3 = st.columns(3)
+
+                    # Prepare export data
+                    export_data = []
+                    for pred in predictions:
+                        export_data.append({
+                            "habitat_code": pred["habitat_code"],
+                            "habitat_name": pred["habitat_name"],
+                            "score": pred["score"],
+                            "matched_diagnostic": ", ".join([s["species"] for s in pred["matched_species"].get("diagnostic", [])]),
+                            "matched_dominant": ", ".join([s["species"] for s in pred["matched_species"].get("dominant", [])]),
+                            "matched_constant": ", ".join([s["species"] for s in pred["matched_species"].get("constant", [])]),
+                            "total_matched": pred["total_matched"]
+                        })
+                    export_df = pd.DataFrame(export_data)
+
+                    with export_col1:
+                        csv_buffer = io.StringIO()
+                        export_df.to_csv(csv_buffer, index=False)
+                        st.download_button(
+                            label="Download CSV",
+                            data=csv_buffer.getvalue(),
+                            file_name="epdv_predictions.csv",
+                            mime="text/csv"
+                        )
+
+                    with export_col2:
+                        json_export = {
+                            "input_species": species_list,
+                            "threshold": threshold,
+                            "predictions": export_data
+                        }
+                        st.download_button(
+                            label="Download JSON",
+                            data=json.dumps(json_export, indent=2),
+                            file_name="epdv_predictions.json",
+                            mime="application/json"
+                        )
+
+                    with export_col3:
+                        st.markdown(f"*{len(species_list)} species analyzed*")
+
                     # Detailed results
+                    st.markdown("---")
                     st.subheader("Detailed Results")
-                    
+
                     for i, pred in enumerate(predictions[:5]):  # Top 5
                         with st.expander(f"**{pred['habitat_code']}**: {pred['habitat_name']} - Score: {pred['score']:.1%}", expanded=(i==0)):
                             st.markdown(f"**Description:** {EUNIS_HABITATS[pred['habitat_code']]['description']}")
                             st.markdown(f"**Matched species:** {pred['total_matched']}")
-                            
+
                             for ind_type in ["diagnostic", "dominant", "constant"]:
                                 matched = pred["matched_species"].get(ind_type, [])
                                 if matched:
@@ -1137,7 +1213,127 @@ def main():
                     st.warning("No habitat types matched with the given threshold. Try lowering the threshold or adding more species.")
             else:
                 st.error("Please enter at least one species name.")
-    
+
+    elif "Species Lookup" in mode:
+        st.subheader("Species Lookup")
+        st.markdown(
+            "Search for a species to see which EUNIS habitat types it indicates. "
+            "This reverse lookup helps understand the diagnostic value of individual species."
+        )
+
+        col1, col2 = st.columns([2, 1])
+
+        with col1:
+            # Species search
+            selected_species = st.selectbox(
+                "Search for a species:",
+                options=[""] + ALL_SPECIES,
+                format_func=lambda x: "Type to search..." if x == "" else x,
+                help="Select a species to see its habitat associations"
+            )
+
+            if selected_species:
+                habitat_associations = SPECIES_TO_HABITATS.get(selected_species, [])
+
+                if habitat_associations:
+                    st.markdown(f"### *{selected_species}*")
+                    st.markdown(f"**Indicates {len(habitat_associations)} habitat type(s)**")
+                    st.markdown("---")
+
+                    # Group by indicator type
+                    by_type = {"diagnostic": [], "dominant": [], "constant": []}
+                    for assoc in habitat_associations:
+                        by_type[assoc["indicator_type"]].append(assoc)
+
+                    # Create summary chart
+                    chart_data = []
+                    for assoc in habitat_associations:
+                        chart_data.append({
+                            "habitat": f"{assoc['habitat_code']}: {assoc['habitat_name'][:25]}...",
+                            "weight": assoc["weight"],
+                            "type": assoc["indicator_type"].capitalize()
+                        })
+
+                    if chart_data:
+                        df = pd.DataFrame(chart_data)
+                        color_map = {"Diagnostic": "#d62728", "Dominant": "#ff7f0e", "Constant": "#2ca02c"}
+
+                        fig = go.Figure()
+                        for ind_type in ["Diagnostic", "Dominant", "Constant"]:
+                            subset = df[df["type"] == ind_type]
+                            if not subset.empty:
+                                fig.add_trace(go.Bar(
+                                    y=subset["habitat"],
+                                    x=subset["weight"],
+                                    orientation="h",
+                                    name=ind_type,
+                                    marker_color=color_map[ind_type],
+                                ))
+
+                        fig.update_layout(
+                            title=f"Habitat Associations for {selected_species}",
+                            xaxis_title="Weight",
+                            yaxis_title="",
+                            barmode="group",
+                            height=300 + len(chart_data) * 25,
+                            margin=dict(l=200),
+                            legend=dict(orientation="h", yanchor="bottom", y=1.02),
+                        )
+                        st.plotly_chart(fig, use_container_width=True)
+
+                    # Detailed breakdown
+                    st.markdown("### Habitat Associations")
+
+                    for ind_type, label, description in [
+                        ("diagnostic", "Diagnostic", "Strong indicator - presence strongly suggests this habitat"),
+                        ("dominant", "Dominant", "Often dominant species in this habitat"),
+                        ("constant", "Constant", "Frequently present but not exclusive to this habitat")
+                    ]:
+                        assocs = by_type[ind_type]
+                        if assocs:
+                            st.markdown(f"**{label}** ({len(assocs)} habitat{'s' if len(assocs) > 1 else ''})")
+                            st.caption(description)
+                            for assoc in sorted(assocs, key=lambda x: x["weight"], reverse=True):
+                                st.markdown(
+                                    f"- **{assoc['habitat_code']}**: {assoc['habitat_name']} "
+                                    f"(weight: {assoc['weight']:.2f})"
+                                )
+                            st.markdown("")
+                else:
+                    st.info("No habitat associations found for this species.")
+
+        with col2:
+            st.markdown("### About Indicator Types")
+            st.markdown(
+                "**Diagnostic species** are highly characteristic of a habitat "
+                "and their presence strongly suggests that habitat type.\n\n"
+                "**Dominant species** are often the most abundant species "
+                "that define the structure of a habitat.\n\n"
+                "**Constant species** are frequently found in a habitat "
+                "but may also occur in other habitat types."
+            )
+
+            if selected_species:
+                st.markdown("---")
+                st.markdown("### Quick Stats")
+                assocs = SPECIES_TO_HABITATS.get(selected_species, [])
+                n_diag = len([a for a in assocs if a["indicator_type"] == "diagnostic"])
+                n_dom = len([a for a in assocs if a["indicator_type"] == "dominant"])
+                n_const = len([a for a in assocs if a["indicator_type"] == "constant"])
+
+                st.metric("Total habitats", len(assocs))
+                col_a, col_b, col_c = st.columns(3)
+                col_a.metric("Diagnostic", n_diag)
+                col_b.metric("Dominant", n_dom)
+                col_c.metric("Constant", n_const)
+
+                if assocs:
+                    max_weight = max(a["weight"] for a in assocs)
+                    best_habitat = [a for a in assocs if a["weight"] == max_weight][0]
+                    st.markdown("---")
+                    st.markdown("**Strongest association:**")
+                    st.markdown(f"*{best_habitat['habitat_code']}* ({best_habitat['weight']:.2f})")
+
     elif "Browse EUNIS" in mode:
         st.subheader("EUNIS Habitat Browser")
         
@@ -1178,37 +1374,107 @@ def main():
     
     elif "View Habitat Distribution" in mode:
         st.subheader("Habitat Distribution Map")
-        
-        col1, col2 = st.columns([1, 3])
-        
-        with col1:
-            # Only show habitats with sample data
-            habitats_with_data = [code for code in SAMPLE_OBSERVATIONS_NL.keys()]
-            habitat_options = {f"{code}: {EUNIS_HABITATS[code]['name'][:30]}...": code for code in habitats_with_data}
-            
+
+        # Only show habitats with sample data
+        habitats_with_data = [code for code in SAMPLE_OBSERVATIONS_NL.keys()]
+        habitat_options = {f"{code}: {EUNIS_HABITATS[code]['name'][:30]}...": code for code in habitats_with_data}
+
+        col_sel1, col_sel2 = st.columns([2, 1])
+        with col_sel1:
             selected = st.selectbox("Select habitat:", options=list(habitat_options.keys()))
-            
-            year_filter = st.radio("Year filter:", ["All years", "2000", "2010"])
-            year_val = None if year_filter == "All years" else int(year_filter)
-            
-            if selected:
-                hab_code = habitat_options[selected]
-                obs = SAMPLE_OBSERVATIONS_NL.get(hab_code, [])
-                if year_val:
-                    obs = [o for o in obs if o["year"] == year_val]
-                
-                st.metric("Observations", len(obs))
-                if obs:
-                    avg_score = sum(o["score"] for o in obs) / len(obs)
-                    st.metric("Avg. Score", f"{avg_score:.1%}")
-        
-        with col2:
-            if selected:
-                hab_code = habitat_options[selected]
-                m = create_habitat_map(hab_code, year_val)
-                st_folium(m, width=700, height=500)
-                
-                st.caption("Green: High confidence (>=85%) | Yellow: Medium (70-85%) | Red: Lower (<70%)")
+        with col_sel2:
+            view_mode = st.radio("View mode:", ["Single year", "Compare 2000 vs 2010"], horizontal=True)
+
+        if selected:
+            hab_code = habitat_options[selected]
+            all_obs = SAMPLE_OBSERVATIONS_NL.get(hab_code, [])
+            obs_2000 = [o for o in all_obs if o["year"] == 2000]
+            obs_2010 = [o for o in all_obs if o["year"] == 2010]
+
+            if view_mode == "Single year":
+                col1, col2 = st.columns([1, 3])
+
+                with col1:
+                    year_filter = st.radio("Year filter:", ["All years", "2000", "2010"])
+                    year_val = None if year_filter == "All years" else int(year_filter)
+
+                    obs = all_obs if year_val is None else [o for o in all_obs if o["year"] == year_val]
+
+                    st.metric("Observations", len(obs))
+                    if obs:
+                        avg_score = sum(o["score"] for o in obs) / len(obs)
+                        st.metric("Avg. Score", f"{avg_score:.1%}")
+
+                with col2:
+                    m = create_habitat_map(hab_code, year_val)
+                    st_folium(m, width=700, height=500)
+                    st.caption("Green: High confidence (>=85%) | Yellow: Medium (70-85%) | Red: Lower (<70%)")
+
+            else:  # Compare mode
+                st.markdown("### Temporal Comparison: 2000 vs 2010")
+                st.markdown(
+                    "Compare habitat distribution between the two reference years. "
+                    "This analysis is essential for EU Article 17 reporting on habitat trends."
+                )
+
+                map_col1, map_col2 = st.columns(2)
+
+                with map_col1:
+                    st.markdown("**Year 2000**")
+                    m_2000 = create_habitat_map(hab_code, 2000)
+                    st_folium(m_2000, width=350, height=400, key="map_2000")
+
+                    if obs_2000:
+                        avg_2000 = sum(o["score"] for o in obs_2000) / len(obs_2000)
+                        st.metric("Observations", len(obs_2000))
+                        st.metric("Avg. Score", f"{avg_2000:.1%}")
+                    else:
+                        st.info("No observations for 2000")
+
+                with map_col2:
+                    st.markdown("**Year 2010**")
+                    m_2010 = create_habitat_map(hab_code, 2010)
+                    st_folium(m_2010, width=350, height=400, key="map_2010")
+
+                    if obs_2010:
+                        avg_2010 = sum(o["score"] for o in obs_2010) / len(obs_2010)
+                        st.metric("Observations", len(obs_2010))
+                        st.metric("Avg. Score", f"{avg_2010:.1%}")
+                    else:
+                        st.info("No observations for 2010")
+
+                # Change analysis
+                if obs_2000 and obs_2010:
+                    st.markdown("---")
+                    st.markdown("### Change Analysis")
+
+                    change_col1, change_col2, change_col3 = st.columns(3)
+
+                    obs_change = len(obs_2010) - len(obs_2000)
+                    avg_2000 = sum(o["score"] for o in obs_2000) / len(obs_2000)
+                    avg_2010 = sum(o["score"] for o in obs_2010) / len(obs_2010)
+                    score_change = avg_2010 - avg_2000
+
+                    with change_col1:
+                        delta_str = f"+{obs_change}" if obs_change > 0 else str(obs_change)
+                        st.metric("Observation count change", delta_str, delta=obs_change)
+
+                    with change_col2:
+                        delta_pct = f"{score_change:+.1%}"
+                        st.metric("Avg. score change", delta_pct, delta=f"{score_change:.1%}")
+
+                    with change_col3:
+                        if obs_change > 0 and score_change > 0:
+                            trend = "Improving"
+                        elif obs_change < 0 and score_change < 0:
+                            trend = "Declining"
+                        elif obs_change == 0 and abs(score_change) < 0.05:
+                            trend = "Stable"
+                        else:
+                            trend = "Mixed"
+                        st.metric("Trend", trend)
+
+                    st.caption("Note: Demo data - actual QGIS plugin provides comprehensive change detection across millions of grid cells.")
     
     elif "Database Statistics" in mode:
         st.subheader("EPDV Database Statistics")
@@ -1250,23 +1516,125 @@ def main():
         with col3:
             st.metric("Species-Habitat Links", sum(len(v) for v in SPECIES_TO_HABITATS.values()))
         
-        #st.markdown("---")
-        
-        #st.markdown("### Algorithm")
-        #st.code("""
-#For each grid cell (x, y):
-    #1. Identify all species observed at location
-    #2. For target habitat type:
-       #- Get diagnostic species and their weights (multiplier: 1.5x)
-       #- Get dominant species and their weights (multiplier: 1.2x)
-       #- Get constant species and their weights (multiplier: 1.0x)
-   # 3. Calculate score:
-       #score = Sum(species_weight x type_multiplier x presence) / total_possible
-    #4. If score >= threshold:
-       #- Mark cell as potential habitat
-       #- Store probability score
-   # 5. Return georeferenced results
-       # """, language="python")
+        st.markdown("---")
+
+        st.markdown("### Prediction Algorithm")
+
+        algo_col1, algo_col2 = st.columns([1, 1])
+
+        with algo_col1:
+            st.markdown("#### How it works")
+            st.markdown("""
+The EPDV algorithm predicts habitat types using a **weighted indicator species approach**:
+
+1. **Species Classification**: Each species is classified as:
+   - **Diagnostic** (1.5x multiplier): Highly characteristic, presence strongly indicates habitat
+   - **Dominant** (1.2x multiplier): Often the most abundant, defines habitat structure
+   - **Constant** (1.0x multiplier): Frequently present but not exclusive
+
+2. **Score Calculation**: For each habitat type:
+   ```
+   score = Sum(weight x type_multiplier x presence) / total_possible
+   ```
+
+3. **Threshold Filtering**: Only habitats exceeding the threshold are returned, ranked by score.
+            """)
+
+        with algo_col2:
+            st.markdown("#### Weight Distribution")
+
+            # Create visualization of weight distribution
+            weight_data = []
+            for hab_code, indicators in INDICATOR_SPECIES.items():
+                for ind_type in ["diagnostic", "dominant", "constant"]:
+                    for sp in indicators.get(ind_type, []):
+                        weight_data.append({
+                            "type": ind_type.capitalize(),
+                            "weight": sp["weight"]
+                        })
+
+            if weight_data:
+                df_weights = pd.DataFrame(weight_data)
+                fig = go.Figure()
+
+                for ind_type, color in [("Diagnostic", "#d62728"), ("Dominant", "#ff7f0e"), ("Constant", "#2ca02c")]:
+                    subset = df_weights[df_weights["type"] == ind_type]["weight"]
+                    fig.add_trace(go.Box(
+                        y=subset,
+                        name=ind_type,
+                        marker_color=color
+                    ))
+
+                fig.update_layout(
+                    title="Weight Distribution by Indicator Type",
+                    yaxis_title="Weight",
+                    showlegend=False,
+                    height=300
+                )
+                st.plotly_chart(fig, use_container_width=True)
+
+        st.markdown("---")
+
+        st.markdown("#### Interactive Example")
+        st.markdown("See how the algorithm calculates scores for different species combinations:")
+
+        example_col1, example_col2 = st.columns([1, 1])
+
+        with example_col1:
+            example_habitat = st.selectbox(
+                "Select example habitat:",
+                options=[f"{code}: {EUNIS_HABITATS[code]['name']}" for code in ["S41", "T17", "Q11", "MA222"]],
+                key="algo_example"
+            )
+            example_code = example_habitat.split(":")[0]
+
+            indicators = INDICATOR_SPECIES.get(example_code, {})
+            if indicators:
+                st.markdown(f"**Indicator species for {example_code}:**")
+
+                type_weights = {"diagnostic": 1.5, "dominant": 1.2, "constant": 1.0}
+                total_possible = 0
+
+                for ind_type in ["diagnostic", "dominant", "constant"]:
+                    species_list = indicators.get(ind_type, [])
+                    multiplier = type_weights[ind_type]
+                    for sp in species_list:
+                        total_possible += sp["weight"] * multiplier
+                        st.markdown(f"- {sp['species']} ({ind_type[:4]}) = {sp['weight']:.2f} x {multiplier} = **{sp['weight'] * multiplier:.2f}**")
+
+                st.markdown(f"**Total possible score: {total_possible:.2f}**")
+
+        with example_col2:
+            if indicators:
+                # Simulate a match scenario
+                st.markdown("**Example calculation:**")
+                st.markdown("If 2 diagnostic and 1 constant species are present:")
+
+                # Get first 2 diagnostic and 1 constant
+                diag_species = indicators.get("diagnostic", [])[:2]
+                const_species = indicators.get("constant", [])[:1]
+
+                matched_score = 0
+                for sp in diag_species:
+                    matched_score += sp["weight"] * 1.5
+                for sp in const_species:
+                    matched_score += sp["weight"] * 1.0
+
+                st.code(f"""
+Matched species:
+{chr(10).join([f"  - {sp['species']}: {sp['weight']:.2f} x 1.5 = {sp['weight']*1.5:.2f}" for sp in diag_species])}
+{chr(10).join([f"  - {sp['species']}: {sp['weight']:.2f} x 1.0 = {sp['weight']*1.0:.2f}" for sp in const_species])}
+
+Matched score: {matched_score:.2f}
+Total possible: {total_possible:.2f}
+
+Final score: {matched_score:.2f} / {total_possible:.2f} = {matched_score/total_possible:.1%}
+                """)
+
+                if matched_score / total_possible >= 0.3:
+                    st.success(f"Score {matched_score/total_possible:.1%} >= 30% threshold: HABITAT PREDICTED")
+                else:
+                    st.warning(f"Score {matched_score/total_possible:.1%} < 30% threshold: below threshold")
     
     # Footer
     st.markdown("---")
